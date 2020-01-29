@@ -24,6 +24,7 @@ import com.company.retrospective.repository.UserRepository;
 
 @RestController
 @RequestMapping(path = "v1/user")
+
 public class UserController {
 
 	@Autowired
@@ -44,7 +45,7 @@ public class UserController {
 		return new ResponseEntity<>(user, headers, HttpStatus.OK);
 	}
 
-	@PostMapping()
+	@PostMapping(path = "/register")
 	@CrossOrigin(origins = "*")
 	public ResponseEntity<User> addUser(@RequestBody User user) {
 
@@ -53,20 +54,23 @@ public class UserController {
 		System.out.println("Getting user by userID");
 		User existingUser = userRepository.findByuserName(user.getUserName());
 		if(existingUser!=null) {
-			return new ResponseEntity<>(null,HttpStatus.OK);
+			System.out.println("Username Already Used By :{}" +existingUser);
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		User userObj = userRepository.save(user);
 		System.out.println("Object saved is " + userObj);
 		
 		System.out.println("Saving User Details for new user : {}"+userObj);
 
-		UserDetails userDetails = userDetailsRepository.save(new UserDetails(userObj.getId(),new ArrayList<Board>()));
+		UserDetails userDetails = userDetailsRepository.save(new UserDetails(userObj.getUserName(),new ArrayList<Board>()));
 		System.out.println("Saved user Details are : {}"+userDetails);
 		return new ResponseEntity<>(userObj, HttpStatus.OK);
 	}
 	
 	@GetMapping
 	public List<User> findAllUsers(){
+		System.out.println("UserController(MyCont) -> findAllUsers");
+
 		
 		System.out.println("Request for get all users");
 		List<User> list = userRepository.findAll();

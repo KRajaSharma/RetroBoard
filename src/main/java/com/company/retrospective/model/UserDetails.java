@@ -12,6 +12,7 @@ public class UserDetails {
 	private String id;
 	private String userId;
 	private List<Board> boards;
+	private String userName;
 	
 	public UserDetails() {
 		super();
@@ -19,9 +20,9 @@ public class UserDetails {
 	
 	
 
-	public UserDetails(String userId, List<Board> boards) {
+	public UserDetails(String userName, List<Board> boards) {
 		super();
-		this.userId = userId;
+		this.userName = userName;
 		this.boards = boards;
 	}
 
@@ -51,9 +52,21 @@ public class UserDetails {
 		this.boards = boards;
 	}
 
+	public String getUserName() {
+		return userName;
+	}
+
+
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+
+
 	@Override
 	public String toString() {
-		return "UserDetails [id=" + id + ", userId=" + userId + ", boards=" + boards + "]";
+		return "UserDetails [id=" + id + ", userId=" + userId + ", boards=" + boards + ", userName=" + userName + "]";
 	}
 	
 	

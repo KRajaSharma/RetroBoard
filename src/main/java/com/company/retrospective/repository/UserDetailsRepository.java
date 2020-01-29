@@ -9,4 +9,5 @@ import com.company.retrospective.model.UserDetails;
 public interface UserDetailsRepository extends MongoRepository<UserDetails, String> {
 
 	public UserDetails findByUserId(String id);
+	public UserDetails findByUserName(String userName);
 }

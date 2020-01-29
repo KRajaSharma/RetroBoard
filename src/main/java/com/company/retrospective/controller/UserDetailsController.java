@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.company.retrospective.config.JwtTokenUtil;
 import com.company.retrospective.model.User;
 import com.company.retrospective.model.UserDetails;
 import com.company.retrospective.repository.UserDetailsRepository;
@@ -25,16 +27,21 @@ public class UserDetailsController {
 	
 	@Autowired
 	UserDetailsRepository userDetailsRepository;
+	
+	@Autowired
+	JwtTokenUtil jwtTokenUtil;
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<UserDetails> getUserDetailsByUserId(@PathVariable String id) {
-		System.out.println("Request for Get User Details with UId "+id);
-		UserDetails userDetails = userDetailsRepository.findByUserId(id);
-		System.out.println("Response for getUser Details "+userDetails);
+	@CrossOrigin(origins = "*")
+	public ResponseEntity<UserDetails> getUserDetailsByUserId(@PathVariable String id, @RequestHeader(value = "Authorization", required = true) String authorization) {
 		
-		MultiValueMap<String, String> headers = new HttpHeaders();
-		headers.add("Access-Control-Allow-Origin", "*");
-		return new ResponseEntity<>(userDetails,headers, HttpStatus.OK);
+		System.out.println("Request for Get User Details with UId "+id);
+		
+		final String userName = jwtTokenUtil.getUsernameFromToken(authorization.substring(7));
+		UserDetails userDetails = userDetailsRepository.findByUserName(userName);
+		//UserDetails userDetails = userDetailsRepository.findByUserId(id);
+		System.out.println("Response for getUser Details "+userDetails);
+		return new ResponseEntity<>(userDetails, HttpStatus.OK);
 	}
 	
 	@GetMapping
@@ -53,8 +60,6 @@ public class UserDetailsController {
 		System.out.println("Saving the UserDetails "+userDetails);
 		UserDetails userDetail =  userDetailsRepository.save(userDetails);
 		System.out.println("Saved Object "+userDetail);
-	//	MultiValueMap<String, String> headers = new HttpHeaders();
-	//	headers.add("Access-Control-Allow-Origin", "*");
 		return new ResponseEntity<>(userDetails, HttpStatus.OK);	}
 	
 	
