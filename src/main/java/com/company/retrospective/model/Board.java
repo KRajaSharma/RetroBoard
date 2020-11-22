@@ -1,10 +1,15 @@
 package com.company.retrospective.model;
 
-import java.sql.Date;
 import java.util.List;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document
 public class Board {
 	
+	@Id
+	private String id;
 	private List<String> wentWell;
 	private List<String> toImprove;
 	private List<String> actionItem;
@@ -73,11 +78,22 @@ public class Board {
 		this.createdOn = createdOn;
 	}
 
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
 	@Override
 	public String toString() {
-		return "Board [wentWell=" + wentWell + ", toImprove=" + toImprove + ", actionItem=" + actionItem + ", title="
-				+ title + ", context=" + context + ", isActive=" + isActive + ", createdOn=" + createdOn + "]";
+		return "Board [id=" + id + ", wentWell=" + wentWell + ", toImprove=" + toImprove + ", actionItem=" + actionItem
+				+ ", title=" + title + ", context=" + context + ", isActive=" + isActive + ", createdOn=" + createdOn
+				+ "]";
 	}
+
+	
 
 
 	

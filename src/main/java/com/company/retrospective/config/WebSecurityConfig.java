@@ -61,8 +61,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		System.out.println("WebSecurityConfig -> configure");
 
-		httpSecurity.csrf().disable().authorizeRequests().antMatchers("/authenticate").permitAll()
+		httpSecurity.csrf().disable().authorizeRequests()
+		.antMatchers("/authenticate").permitAll()
 		.antMatchers("/v1/user/register").permitAll()
+		.antMatchers("/v1/boards/{boardID}").permitAll()
 		.antMatchers(HttpMethod.OPTIONS).permitAll().anyRequest()
 		.authenticated().and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and()
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

@@ -62,7 +62,7 @@ public class UserController {
 		
 		System.out.println("Saving User Details for new user : {}"+userObj);
 
-		UserDetails userDetails = userDetailsRepository.save(new UserDetails(userObj.getUserName(),new ArrayList<Board>()));
+		UserDetails userDetails = userDetailsRepository.save(new UserDetails(userObj.getUserName(),new ArrayList<String>()));
 		System.out.println("Saved user Details are : {}"+userDetails);
 		return new ResponseEntity<>(userObj, HttpStatus.OK);
 	}

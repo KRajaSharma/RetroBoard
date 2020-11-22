@@ -11,7 +11,7 @@ public class UserDetails {
 	@Id
 	private String id;
 	private String userId;
-	private List<Board> boards;
+	private List<String> boards;
 	private String userName;
 	
 	public UserDetails() {
@@ -20,7 +20,7 @@ public class UserDetails {
 	
 	
 
-	public UserDetails(String userName, List<Board> boards) {
+	public UserDetails(String userName, List<String> boards) {
 		super();
 		this.userName = userName;
 		this.boards = boards;
@@ -44,11 +44,11 @@ public class UserDetails {
 		this.userId = userId;
 	}
 
-	public List<Board> getBoards() {
+	public List<String> getBoards() {
 		return boards;
 	}
 
-	public void setBoards(List<Board> boards) {
+	public void setBoards(List<String> boards) {
 		this.boards = boards;
 	}
 
